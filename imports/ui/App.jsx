@@ -7,6 +7,14 @@ import { Books } from '../api/books.js';
 import Book from './Book.jsx'
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      hideTradeProposed: false,
+    };
+  }
+
   handleSubmit(event) {
     event.preventDefault();
 
@@ -24,8 +32,18 @@ class App extends Component {
     ReactDOM.findDOMNode(this.refs.authorInput).value = '';
   }
 
+  toggleHideTradeProposed() {
+    this.setState({
+      hideTradeProposed: !this.state.hideTradeProposed,
+    });
+  }
+
   renderBooks() {
-    return this.props.books.map((book) => (
+    let filteredBooks = this.props.books;
+    if (this.state.hideTradeProposed) {
+      filteredBooks = filteredBooks.filter(book => !book.tradeProposed);
+    }
+    return filteredBooks.map((book) => (
       <Book key={book._id} book={book} />
     ));
   }
@@ -38,6 +56,17 @@ class App extends Component {
         </header>
         <h2>My Books</h2>
         <h4>Add book</h4>
+
+        <label className='hide-tradeProposed'>
+          <input
+            type='checkbox'
+            readOnly
+            checked={this.state.hideTradeProposed}
+            onClick={this.toggleHideTradeProposed.bind(this)}
+          />
+          Hide books where trade has been proposed
+        </label>
+        {/*Add second checkbox for hide my books*/}
 
         <form className="new-book" onSubmit={this.handleSubmit.bind(this)} >
           <input
@@ -71,7 +100,6 @@ App.propTypes = {
 
 export default createContainer(() => {
   return {
-    // will also want to search by not requested/requested
     books: Books.find({}, {
       sort: { createdAt: -1 }
     }).fetch(),
