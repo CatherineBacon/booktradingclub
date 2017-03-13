@@ -71,6 +71,9 @@ App.propTypes = {
 
 export default createContainer(() => {
   return {
-    books: Books.find({}).fetch(),
+    // will also want to search by not requested/requested
+    books: Books.find({}, {
+      sort: { createdAt: -1 }
+    }).fetch(),
   };
 }, App);
