@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
+import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 
 import { Books } from '../api/books.js';
@@ -26,6 +27,8 @@ class App extends Component {
       title,
       author,
       createdAt: new Date(),
+      owner: Meteor.userId(),
+      username: Meteor.user().username,
     });
 
     // clear form
@@ -112,5 +115,6 @@ export default createContainer(() => {
       sort: { createdAt: -1 }
     }).fetch(),
     availableToTradeCount: Books.find({ tradeProposed: { $ne: true } }).count(),
+    currentUser: Meteor.user(),
   };
 }, App);
