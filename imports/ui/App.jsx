@@ -5,6 +5,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import { Books } from '../api/books.js';
 
 import Book from './Book.jsx'
+import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 
 class App extends Component {
   constructor(props) {
@@ -54,6 +55,9 @@ class App extends Component {
         <header>
           <h1>Book Exchange!</h1>
         </header>
+
+        <AccountsUIWrapper />
+
         <h2>My Books</h2>
         <h4>Add book</h4>
 
