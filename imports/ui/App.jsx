@@ -57,17 +57,6 @@ class App extends Component {
         <h2>My Books</h2>
         <h4>Add book</h4>
 
-        <label className='hide-tradeProposed'>
-          <input
-            type='checkbox'
-            readOnly
-            checked={this.state.hideTradeProposed}
-            onClick={this.toggleHideTradeProposed.bind(this)}
-          />
-          Hide books where trade has been proposed
-        </label>
-        {/*Add second checkbox for hide my books*/}
-
         <form className="new-book" onSubmit={this.handleSubmit.bind(this)} >
           <input
             type='text'
@@ -86,6 +75,20 @@ class App extends Component {
         </form>
 
         <h2>All Books</h2>
+        {/* Will need to remove books from count where user is owner */}
+        <p>Books available to trade: {this.props.availableToTradeCount}</p>
+
+        <label className='hide-tradeProposed'>
+          <input
+            type='checkbox'
+            readOnly
+            checked={this.state.hideTradeProposed}
+            onClick={this.toggleHideTradeProposed.bind(this)}
+          />
+          Hide books where trade has been proposed
+        </label>
+        {/*Add second checkbox for hide my books*/}
+
         <ul>
           {this.renderBooks()}
         </ul>
@@ -96,6 +99,7 @@ class App extends Component {
 
 App.propTypes = {
   books: PropTypes.array.isRequired,
+  availableToTradeCount: PropTypes.number.isRequired,
 };
 
 export default createContainer(() => {
@@ -103,5 +107,6 @@ export default createContainer(() => {
     books: Books.find({}, {
       sort: { createdAt: -1 }
     }).fetch(),
+    availableToTradeCount: Books.find({ tradeProposed: { $ne: true } }).count(),
   };
 }, App);
