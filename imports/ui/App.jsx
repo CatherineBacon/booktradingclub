@@ -18,6 +18,15 @@ class App extends Component {
     };
   }
 
+  addBook(title, author) {
+    Books.insert({
+      title,
+      author,
+      createdAt: new Date(),
+      owner: Meteor.userId(),
+      username: Meteor.user().username,
+    });
+  }
 
   toggleHideTradeProposed() {
     this.setState({
@@ -44,7 +53,7 @@ class App extends Component {
 
         <AccountsUIWrapper />
 
-        <MyBooks />
+        <MyBooks addBook={this.addBook}/>
 
         <h2>All Books</h2>
         {/* Will need to remove books from count where user is owner */}

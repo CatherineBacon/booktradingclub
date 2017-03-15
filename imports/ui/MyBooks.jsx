@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
-import { Books } from '../api/books.js';
-
 export default class extends Component {
 	handleSubmit(event) {
 	    event.preventDefault();
@@ -10,13 +8,7 @@ export default class extends Component {
 	    const title = ReactDOM.findDOMNode(this.refs.titleInput).value.trim();
 	    const author = ReactDOM.findDOMNode(this.refs.authorInput).value.trim();
 
-	    Books.insert({
-	      title,
-	      author,
-	      createdAt: new Date(),
-	      owner: Meteor.userId(),
-	      username: Meteor.user().username,
-	    });
+	    this.props.addBook(title, author);
 
 	    // clear form
 	    ReactDOM.findDOMNode(this.refs.titleInput).value = '';
