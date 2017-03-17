@@ -32,30 +32,34 @@ class AllBooks extends Component {
     	));
   	}
 
-	
 	render() {
-		return (
-			<div>
-				<h2>All Books</h2>
-        		{/* Will need to remove books from count where user is owner */}
-        		<p>Books available to trade: {this.props.availableToTradeCount}</p>
+		if(this.props.currentUser){
+			return (
+				<div>
+					<h2>All Books</h2>
+	        		{/* Will need to remove books from count where user is owner */}
+	        		<p>Books available to trade: {this.props.availableToTradeCount}</p>
 
-		        <label className='hide-tradeProposed'>
-		          <input
-		            type='checkbox'
-		            readOnly
-		            checked={this.state.hideTradeProposed}
-		            onClick={this.toggleHideTradeProposed.bind(this)}
-		          />
-		          Hide books where trade has been proposed
-		        </label>
-		        {/*Add second checkbox for hide my books*/}
+			        <label className='hide-tradeProposed'>
+			          <input
+			            type='checkbox'
+			            readOnly
+			            checked={this.state.hideTradeProposed}
+			            onClick={this.toggleHideTradeProposed.bind(this)}
+			          />
+			          Hide books where trade has been proposed
+			        </label>
+			        {/*Add second checkbox for hide my books*/}
 
-		        <ul>
-		          {this.renderBooks()}
-		        </ul>
-			</div>
-		);
+			        <ul>
+			          {this.renderBooks()}
+			        </ul>
+				</div>
+			);
+		} else {
+			return <div>Please login</div>
+		}
+		
 	}
 }
 

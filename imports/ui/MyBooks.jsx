@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import { Meteor } from 'meteor/meteor';
 
 export default class extends Component {
 	handleSubmit(event) {
@@ -16,29 +17,34 @@ export default class extends Component {
 	  }
 
 	render() {
-		return (
-			<div>
-				<h2>My Books</h2>
-        		<h4>Add book</h4>
+		if(this.props.currentUser) {
+			return (
+				<div>
+					<h2>My Books</h2>
+        			<h4>Add book</h4>
+        			<form className="new-book" onSubmit={this.handleSubmit.bind(this)} >
+          				<input
+	            			type='text'
+	            			ref='titleInput'
+	            			placeholder='Title'
+	          			/>
+	          			<input
+	            			type='text'
+	            			ref='authorInput'
+	            			placeholder='Author'
+	          			/>
+	          			<input
+	            			type='submit'
+	            			value='Add'
+	          			/>
+	        		</form>
+	        		{this.props.books.title}
+				</div>
+			);
+		} else {
+			return <div>Please login</div>
+		}
 
-        		<form className="new-book" onSubmit={this.handleSubmit.bind(this)} >
-          			<input
-            			type='text'
-            			ref='titleInput'
-            			placeholder='Title'
-          			/>
-          			<input
-            			type='text'
-            			ref='authorInput'
-            			placeholder='Author'
-          			/>
-          			<input
-            			type='submit'
-            			value='Add'
-          			/>
-        		</form>
-			</div>
-		);
 	}
 
 }

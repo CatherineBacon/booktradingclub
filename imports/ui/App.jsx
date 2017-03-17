@@ -20,6 +20,18 @@ class App extends Component {
       owner: Meteor.userId(),
       username: Meteor.user().username,
     });
+
+    // also update user with books they own???
+  }
+
+  renderBooks() {
+    let filteredBooks = this.props.books;
+    if (this.state.hideTradeProposed) {
+        filteredBooks = filteredBooks.filter(book => !book.tradeProposed);
+    }
+    return filteredBooks.map((book) => (
+        <Book key={book._id} book={book} />
+    ));
   }
 
   render() {
@@ -31,7 +43,11 @@ class App extends Component {
 
         <AccountsUIWrapper />
 
-        <MyBooks addBook={this.addBook} />
+        <MyBooks 
+          addBook={this.addBook} 
+          currentUser={this.props.currentUser}
+          books={this.props.books}
+        />
 
         <AllBooks />
 
@@ -42,7 +58,7 @@ class App extends Component {
 
 App.propTypes = {
   books: PropTypes.array.isRequired,
-  availableToTradeCount: PropTypes.number.isRequired,
+  currentUser: PropTypes.object,
 };
 
 export default createContainer(() => {
@@ -50,7 +66,6 @@ export default createContainer(() => {
     books: Books.find({}, {
       sort: { createdAt: -1 }
     }).fetch(),
-    availableToTradeCount: Books.find({ tradeProposed: { $ne: true } }).count(),
     currentUser: Meteor.user(),
   };
 }, App);
