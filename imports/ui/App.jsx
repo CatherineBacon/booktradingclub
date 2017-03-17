@@ -8,15 +8,9 @@ import { Books } from '../api/books.js';
 import Book from './Book.jsx';
 import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 import MyBooks from './MyBooks.jsx';
+import AllBooks from './AllBooks.jsx';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      hideTradeProposed: false,
-    };
-  }
 
   addBook(title, author) {
     Books.insert({
@@ -28,22 +22,6 @@ class App extends Component {
     });
   }
 
-  toggleHideTradeProposed() {
-    this.setState({
-      hideTradeProposed: !this.state.hideTradeProposed,
-    });
-  }
-
-  renderBooks() {
-    let filteredBooks = this.props.books;
-    if (this.state.hideTradeProposed) {
-      filteredBooks = filteredBooks.filter(book => !book.tradeProposed);
-    }
-    return filteredBooks.map((book) => (
-      <Book key={book._id} book={book} />
-    ));
-  }
-
   render() {
     return (
       <div className='container'>
@@ -53,26 +31,10 @@ class App extends Component {
 
         <AccountsUIWrapper />
 
-        <MyBooks addBook={this.addBook}/>
+        <MyBooks addBook={this.addBook} />
 
-        <h2>All Books</h2>
-        {/* Will need to remove books from count where user is owner */}
-        <p>Books available to trade: {this.props.availableToTradeCount}</p>
+        <AllBooks />
 
-        <label className='hide-tradeProposed'>
-          <input
-            type='checkbox'
-            readOnly
-            checked={this.state.hideTradeProposed}
-            onClick={this.toggleHideTradeProposed.bind(this)}
-          />
-          Hide books where trade has been proposed
-        </label>
-        {/*Add second checkbox for hide my books*/}
-
-        <ul>
-          {this.renderBooks()}
-        </ul>
       </div>
     );
   }
