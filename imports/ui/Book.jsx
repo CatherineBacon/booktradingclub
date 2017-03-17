@@ -5,6 +5,7 @@ import { Books } from '../api/books.js';
 
 // Book component - represents a single book
 export default class Book extends Component {
+
   toggleTradeProposed() {
     // only person who click checkbox should be able to uncheck it
     // box should not show for other users once ticked
@@ -12,7 +13,9 @@ export default class Book extends Component {
   }
 
   deleteThisBook() {
-    // eventually only owner should be able to delete book
+    if (this.props.book.owner != Meteor.userId()) {
+      throw new Meteor.Error('not-authorized');
+    }
     Meteor.call('books.remove', this.props.book._id);
   }
 
@@ -31,7 +34,12 @@ export default class Book extends Component {
           onClick={this.toggleTradeProposed.bind(this)}
         />
         <span className='text'>Title: {this.props.book.title} Author: {this.props.book.author}</span>
-        <button className='delete' onClick={this.deleteThisBook.bind(this)}>
+        
+        <button 
+          className='delete' 
+          onClick={this.deleteThisBook.bind(this)} 
+          hidden={this.props.book.owner!=Meteor.userId() } 
+        >
           &times;
         </button>
       </li>
