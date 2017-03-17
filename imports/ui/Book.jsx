@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { Meteor } from 'meteor/meteor'; 
 
 import { Books } from '../api/books.js';
 
@@ -7,14 +8,12 @@ export default class Book extends Component {
   toggleTradeProposed() {
     // only person who click checkbox should be able to uncheck it
     // box should not show for other users once ticked
-      Books.update(this.props.book._id, {
-        $set: { tradeProposed: !this.props.book.tradeProposed },
-      });
+    Meteor.call('books.toggleTradeProposed', this.props.book._id, !this.props.book.tradeProposed);      
   }
 
   deleteThisBook() {
     // eventually only owner should be able to delete book
-    Books.remove(this.props.book._id);
+    Meteor.call('books.remove', this.props.book._id);
   }
 
   render() {

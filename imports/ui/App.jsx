@@ -12,17 +12,6 @@ import AllBooks from './AllBooks.jsx';
 
 class App extends Component {
 
-  addBook(title, author) {
-    Books.insert({
-      title,
-      author,
-      createdAt: new Date(),
-      owner: Meteor.userId(),
-      username: Meteor.user().username,
-    });
-
-    // also update user with books they own???
-  }
 
   renderBooks() {
     let filteredBooks = this.props.books;
@@ -46,7 +35,6 @@ class App extends Component {
         <MyBooks 
           addBook={this.addBook} 
           currentUser={this.props.currentUser}
-          books={this.props.books}
         />
 
         <AllBooks />
