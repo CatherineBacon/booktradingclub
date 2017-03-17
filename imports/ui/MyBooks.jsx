@@ -7,6 +7,7 @@ import { Books } from '../api/books.js';
 import Book from './Book.jsx';
 
 export default class extends Component {
+
 	handleSubmit(event) {
 	    event.preventDefault();
 
@@ -26,6 +27,7 @@ export default class extends Component {
   };
 
 	render() {
+		Meteor.subscribe('books');
 		if(this.props.currentUser) {
 			return (
 				<div>

@@ -70,6 +70,8 @@ AllBooks.propTypes = {
 };
 
 export default createContainer(() => {
+	Meteor.subscribe('books');
+	
   return {
     books: Books.find({}, {
       sort: { createdAt: -1 }
