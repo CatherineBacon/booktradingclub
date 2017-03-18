@@ -97,7 +97,7 @@ export default createContainer(() => {
     books: Books.find({}, {
       sort: { createdAt: -1 }
     }).fetch(),
-    availableToTradeCount: Books.find({ tradeProposed: { $ne: true } }).count(),
+    availableToTradeCount: Books.find({ tradeProposed: { $ne: true }, owner: { $ne: Meteor.userId() } }).count(),
     currentUser: Meteor.user(),
   };
 }, AllBooks);
