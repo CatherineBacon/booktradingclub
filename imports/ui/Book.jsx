@@ -9,14 +9,11 @@ export default class Book extends Component {
   toggleTradeProposed() {
     // only person who click checkbox should be able to uncheck it
     // box should not show for other users once ticked
-    Meteor.call('books.toggleTradeProposed', this.props.book._id, !this.props.book.tradeProposed);      
+    Meteor.call('books.toggleTradeProposed', this.props.book);      
   }
 
   deleteThisBook() {
-    if (this.props.book.owner != Meteor.userId()) {
-      throw new Meteor.Error('not-authorized');
-    }
-    Meteor.call('books.remove', this.props.book._id);
+    Meteor.call('books.remove', this.props.book);
   }
 
   render() {
@@ -32,8 +29,9 @@ export default class Book extends Component {
           readOnly
           checked={this.props.book.tradeProposed}
           onClick={this.toggleTradeProposed.bind(this)}
+          hidden={this.props.book.owner==Meteor.userId()}
         />
-        <span className='text'>Title: {this.props.book.title} Author: {this.props.book.author}</span>
+        <span className='text'>{this.props.book.title} by {this.props.book.author}</span>
         
         <button 
           className='delete' 

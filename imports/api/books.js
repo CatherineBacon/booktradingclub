@@ -27,19 +27,29 @@ Meteor.methods({
 			createdAt: new Date(),
 			owner: Meteor.userId(),
 			username: Meteor.user().username,
+			tradeProposed: false,
 		});
 	},
 
-	'books.remove'(bookId) {
-		check(bookId, String);
+	'books.remove'(book) {
+		check(book._id, String);
+		check(book.owner, String);
 
-		Books.remove(bookId);
+		if (book.owner != Meteor.userId()) {
+      		throw new Meteor.Error('not-authorized');
+    	}
+
+		Books.remove(book._id);
 	},
 
-	'books.toggleTradeProposed'(bookId, tradeProposed) {
-		check(bookId, String);
-		check(tradeProposed, Boolean);
+	'books.toggleTradeProposed'(book) {
+		check(book._id, String);
+		check(book.tradeProposed, Boolean);
+		check(book.owner, String);
 
-		Books.update(bookId, { $set: { tradeProposed: tradeProposed} });
+		if(!book.tradeProposed && Meteor.userId()==book.owner){
+			throw new Meteor.Error('not-authorized');
+		}
+		Books.update(book._id, { $set: { tradeProposed: !book.tradeProposed} });
 	},
 });
