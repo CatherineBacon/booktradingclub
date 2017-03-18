@@ -13,24 +13,34 @@ class AllBooks extends Component {
 
 	    this.state = {
 	    	hideTradeProposed: false,
+	    	hideMyBooks: false,
 	    };
 	}
 
 	toggleHideTradeProposed() {
-    	this.setState({
-      		hideTradeProposed: !this.state.hideTradeProposed,
-    	});
-  	}
+    this.setState({
+     	hideTradeProposed: !this.state.hideTradeProposed,
+   	});
+ 	}
 
-  	renderBooks() {
-    	let filteredBooks = this.props.books;
-    	if (this.state.hideTradeProposed) {
-      		filteredBooks = filteredBooks.filter(book => !book.tradeProposed);
-    	}
-    	return filteredBooks.map((book) => (
-      		<Book key={book._id} book={book} />
-    	));
-  	}
+  toggleHideMyBooks() {
+  	this.setState({
+  		hideMyBooks: !this.state.hideMyBooks,
+  	});
+  }
+
+  renderBooks() {
+   	let filteredBooks = this.props.books;
+   	if (this.state.hideTradeProposed) {
+   		filteredBooks = filteredBooks.filter(book => !book.tradeProposed);
+   	}
+   	if (this.state.hideMyBooks) {
+   		filteredBooks = filteredBooks.filter(book => book.owner!=Meteor.userId())
+   	}
+   	return filteredBooks.map((book) => (
+     		<Book key={book._id} book={book} />
+   	));
+ 	}
 
 	render() {
 		if(this.props.currentUser){
@@ -49,7 +59,18 @@ class AllBooks extends Component {
 			          />
 			          Hide books where trade has been proposed
 			        </label>
-			        {/*Add second checkbox for hide my books*/}
+
+			        <label className='hide-myBooks'>
+			        	<input 
+			        		type='checkbox'
+			        		readOnly
+			        		checked={this.state.hideMyBooks}
+			        		onClick={this.toggleHideMyBooks.bind(this)}
+			        	/>
+			        	Hide my own books
+			        </label>
+
+			        <h4>Check the box to propose a trade</h4>
 
 			        <ul>
 			          {this.renderBooks()}
