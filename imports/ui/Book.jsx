@@ -28,10 +28,7 @@ export default class Book extends Component {
     const bookClassName = this.props.book.tradeProposed ? 'tradeProposed' : '';
 
     return (
-      <li className={bookClassName}>
-        {/* will only want to show tickbox if user is not owner
-          and box has not been checked by another user
-          */}
+      <span className={bookClassName}>
         <input
           type='checkbox'
           readOnly
@@ -48,7 +45,7 @@ export default class Book extends Component {
         >
           &times;
         </button>
-      </li>
+      </span>
     );
   }
 }
