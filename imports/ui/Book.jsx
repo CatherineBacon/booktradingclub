@@ -16,6 +16,14 @@ export default class Book extends Component {
     Meteor.call('books.remove', this.props.book);
   }
 
+  hideTradeCheckbox() {
+    if(this.props.book.owner==Meteor.userId()) return true;
+    if(this.props.book.tradeProposed && this.props.book.proposedById!=Meteor.userId()){
+      return true;
+    }
+    return false;
+  }
+
   render() {
     const bookClassName = this.props.book.tradeProposed ? 'tradeProposed' : '';
 
@@ -29,7 +37,7 @@ export default class Book extends Component {
           readOnly
           checked={this.props.book.tradeProposed}
           onClick={this.toggleTradeProposed.bind(this)}
-          hidden={this.props.book.owner==Meteor.userId()}
+          hidden={this.hideTradeCheckbox()}
         />
         <span className='text'>{this.props.book.title} by {this.props.book.author}</span>
         

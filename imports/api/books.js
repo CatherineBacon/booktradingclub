@@ -60,6 +60,10 @@ Meteor.methods({
 			proposedByUsername = Meteor.user().username;
 		}
 
+		if(book.tradeProposed && Meteor.userId()!=book.proposedById) {
+			throw new Meteor.Error('not-authorized');
+		}
+
 		Books.update(book._id, { $set: { 
 			tradeProposed: !book.tradeProposed,
 			proposedById: proposedById,
