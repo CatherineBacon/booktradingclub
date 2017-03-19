@@ -47,7 +47,6 @@ class AllBooks extends Component {
 			return (
 				<div>
 					<h2>All Books</h2>
-	        		{/* Will need to remove books from count where user is owner */}
 	        		<p>Books available to trade: {this.props.availableToTradeCount}</p>
 
 			        <label className='hide-tradeProposed'>

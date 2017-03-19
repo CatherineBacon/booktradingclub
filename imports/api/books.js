@@ -28,6 +28,8 @@ Meteor.methods({
 			owner: Meteor.userId(),
 			username: Meteor.user().username,
 			tradeProposed: false,
+			proposedById: '',
+			proposedByUsername: '',
 		});
 	},
 
@@ -50,6 +52,18 @@ Meteor.methods({
 		if(!book.tradeProposed && Meteor.userId()==book.owner){
 			throw new Meteor.Error('not-authorized');
 		}
-		Books.update(book._id, { $set: { tradeProposed: !book.tradeProposed} });
+
+		let proposedById = "";
+		let proposedByUsername = "";
+		if(!book.tradeProposed) {
+			proposedById = Meteor.userId();
+			proposedByUsername = Meteor.user().username;
+		}
+
+		Books.update(book._id, { $set: { 
+			tradeProposed: !book.tradeProposed,
+			proposedById: proposedById,
+			proposedByUsername: proposedByUsername,
+		} });
 	},
 });
