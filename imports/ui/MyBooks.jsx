@@ -9,6 +9,13 @@ import Book from './Book.jsx';
 import Trader from './Trader.jsx';
 
 class MyBooks extends Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			onlyShowProposed: false,
+		};
+	}
 
 	handleSubmit(event) {
 	   event.preventDefault();
@@ -26,7 +33,13 @@ class MyBooks extends Component {
 	addBook(title, author) {
     Meteor.call('books.insert', title, author);
     //also update user with books they own??
-  };
+  }
+
+  toggleOnlyShowProposed() {
+  	this.setState({
+  		onlyShowProposed: !this.state.onlyShowProposed,
+  	});
+  }
 
   renderYourRequests() {
   	let books = this.props.books;
@@ -40,10 +53,13 @@ class MyBooks extends Component {
   	});
   }
 
-  renderBooks() {
+  renderBooks(onlyShowProposed=this.state.onlyShowProposed) {
    	let books = this.props.books;
    	let filteredBooks = books.filter( book => book.owner==Meteor.userId());
 
+   	if(onlyShowProposed){
+   		filteredBooks = filteredBooks.filter( book => book.tradeProposed);
+   	}
 
    	return filteredBooks.map((book) => {
    		
@@ -87,10 +103,18 @@ class MyBooks extends Component {
 					<ul>{this.renderYourRequests()}</ul>
 
 					<h4>Trade requests for your books ({this.props.tradeProposedCount} waiting)</h4>
-					<div>SHOW BOOKS USER HAS WAITING FOR TRADE UPDATE COUNT</div>
+					<ul>{this.renderBooks(true)}</ul>
 
 	     		<h4>My books</h4>
-	     		only show books where trade is proposed
+	     		<label className='onlyShowProposed'>
+			      <input
+			        type='checkbox'
+			        readOnly
+			        checked={this.state.onlyShowProposed}
+			        onClick={this.toggleOnlyShowProposed.bind(this)}
+			      />
+		        Only show books where a trade has been proposed
+		      </label>
 	     		<ul>
 	     			{this.renderBooks()}
 	     		</ul>
