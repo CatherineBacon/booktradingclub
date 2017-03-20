@@ -39,7 +39,7 @@ class AllBooks extends Component {
    	}
    	return filteredBooks.map((book) => (
      		<li key={book._id}>
-     			<Book book={book} />
+     			<Book book={book} page='AllBooks'/>
      		</li>
    	));
  	}

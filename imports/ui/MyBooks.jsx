@@ -32,7 +32,7 @@ class MyBooks extends Component {
    	filteredBooks = filteredBooks.filter( book => book.owner==Meteor.userId());
    	return filteredBooks.map((book) => (
    			<li key={book._id}>
-     			<Book key={book._id} book={book} />
+     			<Book book={book} page="MyBooks" />
      		</li>
    	));
  	}

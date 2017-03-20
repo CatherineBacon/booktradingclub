@@ -29,13 +29,15 @@ export default class Book extends Component {
 
     return (
       <span className={bookClassName}>
-        <input
-          type='checkbox'
-          readOnly
-          checked={this.props.book.tradeProposed}
-          onClick={this.toggleTradeProposed.bind(this)}
-          hidden={this.hideTradeCheckbox()}
-        />
+        {this.props.page=='AllBooks' ? (
+          <input
+            type='checkbox'
+            readOnly
+            checked={this.props.book.tradeProposed}
+            onClick={this.toggleTradeProposed.bind(this)}
+            hidden={this.hideTradeCheckbox()}
+          /> ) : null
+        }
         <span className='text'>{this.props.book.title} by {this.props.book.author}</span>
         
         <button 
@@ -45,6 +47,13 @@ export default class Book extends Component {
         >
           &times;
         </button>
+
+        { this.props.page=='MyBooks' ? (
+          <span>
+            {this.props.book.tradeProposed ? `Trade proposed by ${this.props.book.proposedByUsername}` : ''}
+          </span>
+          ) : null
+        }
       </span>
     );
   }
