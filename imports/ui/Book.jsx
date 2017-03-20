@@ -7,8 +7,6 @@ import { Books } from '../api/books.js';
 export default class Book extends Component {
 
   toggleTradeProposed() {
-    // only person who click checkbox should be able to uncheck it
-    // box should not show for other users once ticked
     Meteor.call('books.toggleTradeProposed', this.props.book);      
   }
 
@@ -48,12 +46,6 @@ export default class Book extends Component {
           &times;
         </button>
 
-        { this.props.page=='MyBooks' ? (
-          <span>
-            {this.props.book.tradeProposed ? `Trade proposed by ${this.props.book.proposedByUsername}` : ''}
-          </span>
-          ) : null
-        }
       </span>
     );
   }

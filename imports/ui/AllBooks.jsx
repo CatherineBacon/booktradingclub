@@ -9,12 +9,12 @@ import Book from './Book.jsx';
 
 class AllBooks extends Component {
 	constructor(props) {
-	    super(props);
+	  super(props);
 
-	    this.state = {
-	    	hideTradeProposed: false,
-	    	hideMyBooks: false,
-	    };
+	  this.state = {
+  		hideTradeProposed: false,
+  		hideMyBooks: false,
+	  };
 	}
 
 	toggleHideTradeProposed() {
@@ -37,10 +37,11 @@ class AllBooks extends Component {
    	if (this.state.hideMyBooks) {
    		filteredBooks = filteredBooks.filter(book => book.owner!=Meteor.userId())
    	}
+
    	return filteredBooks.map((book) => (
-     		<li key={book._id}>
-     			<Book book={book} page='AllBooks'/>
-     		</li>
+     	<li key={book._id}>
+     		<Book book={book} page='AllBooks'/>
+   		</li>
    	));
  	}
 
@@ -49,33 +50,34 @@ class AllBooks extends Component {
 			return (
 				<div>
 					<h2>All Books</h2>
-	        		<p>Books available to trade: {this.props.availableToTradeCount}</p>
+	       	
+	       	<p>Books available to trade: {this.props.availableToTradeCount}</p>
 
-			        <label className='hide-tradeProposed'>
-			          <input
-			            type='checkbox'
-			            readOnly
-			            checked={this.state.hideTradeProposed}
-			            onClick={this.toggleHideTradeProposed.bind(this)}
-			          />
-			          Hide books where trade has been proposed
-			        </label>
+			    <label className='hide-tradeProposed'>
+			      <input
+			        type='checkbox'
+			        readOnly
+			        checked={this.state.hideTradeProposed}
+			        onClick={this.toggleHideTradeProposed.bind(this)}
+			      />
+		        Hide books where trade has been proposed
+		      </label>
 
-			        <label className='hide-myBooks'>
-			        	<input 
-			        		type='checkbox'
-			        		readOnly
-			        		checked={this.state.hideMyBooks}
-			        		onClick={this.toggleHideMyBooks.bind(this)}
-			        	/>
-			        	Hide my own books
-			        </label>
+		      <label className='hide-myBooks'>
+		       	<input 
+			     		type='checkbox'
+		      		readOnly
+		      		checked={this.state.hideMyBooks}
+		      		onClick={this.toggleHideMyBooks.bind(this)}
+			     	/>
+			     	Hide my own books
+		      </label>
 
-			        <h4>Check the box to propose a trade</h4>
+		      <h4>Check the box to propose a trade</h4>
 
-			        <ul>
-			          {this.renderBooks()}
-			        </ul>
+		      <ul>
+		        {this.renderBooks()}
+		      </ul>
 				</div>
 			);
 		} else {

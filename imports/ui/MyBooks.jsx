@@ -6,6 +6,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import { Books } from '../api/books.js';
 
 import Book from './Book.jsx';
+import Trader from './Trader.jsx';
 
 class MyBooks extends Component {
 
@@ -28,13 +29,18 @@ class MyBooks extends Component {
   };
 
   renderBooks() {
-   	let filteredBooks = this.props.books;
-   	filteredBooks = filteredBooks.filter( book => book.owner==Meteor.userId());
-   	return filteredBooks.map((book) => (
+   	let books = this.props.books;
+   	let filteredBooks = books.filter( book => book.owner==Meteor.userId());
+   	return filteredBooks.map((book) => {
+   		let traderBooks = books.filter( b => book.proposedById==b.owner );
+   		
+   		return (
    			<li key={book._id}>
      			<Book book={book} page="MyBooks" />
+     			<Trader book={book} traderBooks={traderBooks} />
      		</li>
-   	));
+     	)
+   	});
  	}
 
 	render() {
