@@ -28,10 +28,25 @@ class MyBooks extends Component {
     //also update user with books they own??
   };
 
+  renderYourRequests() {
+  	let books = this.props.books;
+  	let filteredBooks = books.filter( book => book.proposedById==Meteor.userId());
+  	return filteredBooks.map( book => {
+  		return (
+  			<li key={book._id}>
+  				<Book book={book} />
+  			</li>
+  		)
+  	});
+  }
+
   renderBooks() {
    	let books = this.props.books;
    	let filteredBooks = books.filter( book => book.owner==Meteor.userId());
+
+
    	return filteredBooks.map((book) => {
+   		
    		let traderBooks = books.filter( b => book.proposedById==b.owner );
    		
    		return (
@@ -68,7 +83,14 @@ class MyBooks extends Component {
       			/>
 	     		</form>
 
+					<h4>Your trade requests ({this.props.youProposedTradeCount} outstanding)</h4>
+					<ul>{this.renderYourRequests()}</ul>
+
+					<h4>Trade requests for your books ({this.props.tradeProposedCount} waiting)</h4>
+					<div>SHOW BOOKS USER HAS WAITING FOR TRADE UPDATE COUNT</div>
+
 	     		<h4>My books</h4>
+	     		only show books where trade is proposed
 	     		<ul>
 	     			{this.renderBooks()}
 	     		</ul>
@@ -82,7 +104,8 @@ class MyBooks extends Component {
 
 MyBooks.propTypes = {
   books: PropTypes.array.isRequired,
-  availableToTradeCount: PropTypes.number.isRequired,
+  tradeProposedCount: PropTypes.number.isRequired,
+  youProposedTradeCount: PropTypes.number.isRequired,
 };
 
 export default createContainer(() => {
@@ -92,7 +115,8 @@ export default createContainer(() => {
     books: Books.find({}, {
       sort: { createdAt: -1 }
     }).fetch(),
-    availableToTradeCount: Books.find({ tradeProposed: { $ne: true }, owner: { $ne: Meteor.userId() } }).count(),
+    tradeProposedCount: Books.find({ tradeProposed: { $ne: false }, owner: Meteor.userId() }).count(),
+    youProposedTradeCount: Books.find({ tradeProposed: { $ne: false }, proposedById: Meteor.userId() }).count(),
     currentUser: Meteor.user(),
   };
 }, MyBooks);

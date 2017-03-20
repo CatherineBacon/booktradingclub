@@ -27,7 +27,7 @@ export default class Book extends Component {
 
     return (
       <span className={bookClassName}>
-        {this.props.page=='AllBooks' ? (
+        {this.props.page!='MyBooks' ? (
           <input
             type='checkbox'
             readOnly
