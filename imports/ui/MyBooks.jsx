@@ -118,6 +118,9 @@ class MyBooks extends Component {
 	     		<ul>
 	     			{this.renderBooks()}
 	     		</ul>
+
+	     		<h4>Successful trades</h4>
+	     		<div>LIST SUCCESFUL TRADES HERE</div>
 				</div>
 			);
 		} else {
