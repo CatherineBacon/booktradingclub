@@ -42,10 +42,12 @@ Meteor.methods({
 	},
 
 	'books.tradeBooks'(firstBook, secondBookId) {
+		check(firstBook, Object);
+		check(secondBookId, String);
+
 		if (firstBook.owner != Meteor.userId()) {
 			throw new Meteor.Error('not-authorized');
 		}
-
 		Books.remove(firstBook._id);
 		Books.remove(secondBookId);
 	},

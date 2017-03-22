@@ -23,11 +23,12 @@ export default class Trader extends Component {
     ));
   }
 
-  handleSubmit() {
+  handleSubmit(event) {
     event.preventDefault();
     let choice = this.state.value;
     if(choice=='Decline Trade') {
       Meteor.call('books.declineTrade', this.props.book)
+      return
     }
     Meteor.call('books.tradeBooks', this.props.book, choice)
     /// first just remove books from database
@@ -35,7 +36,7 @@ export default class Trader extends Component {
     // book not show on all books list, email users
   }
 
-  handleChange() {
+  handleChange(event) {
     this.setState({
       value: event.target.value,
     });
