@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 import { Books } from '../api/books.js';
 
@@ -12,34 +13,30 @@ import AllBooks from './AllBooks.jsx';
 
 class App extends Component {
 
-
-  renderBooks() {
-    let filteredBooks = this.props.books;
-    if (this.state.hideTradeProposed) {
-        filteredBooks = filteredBooks.filter(book => !book.tradeProposed);
-    }
-    return filteredBooks.map((book) => (
-        <Book key={book._id} book={book} />
-    ));
-  }
-
   render() {
     return (
-      <div className='container'>
-        <header>
-          <h1>Book Exchange!</h1>
-        </header>
+      <Router>
+        <div className='container'>
+          <header>
+            <h1>Book Exchange!</h1>
+          </header>
 
-        <AccountsUIWrapper />
+          <AccountsUIWrapper />
 
-        <MyBooks 
-          addBook={this.addBook} 
-          currentUser={this.props.currentUser}
-        />
+          <Route exact path='/' render={ () => (
+            <div>
+              <h1>Welcome to Book Exchange!</h1>
+              <Link to='/mybooks'>My Books</Link>
+              <Link to='/allbooks'>All Books</Link>
+            </div>
+          )} />
 
-        <AllBooks />
+          <Route path="/mybooks" component={MyBooks} />
 
-      </div>
+          <Route path='/allbooks' component={AllBooks} />
+
+        </div>
+      </Router>
     );
   }
 }
@@ -56,6 +53,5 @@ export default createContainer(() => {
     books: Books.find({}, {
       sort: { createdAt: -1 }
     }).fetch(),
-    currentUser: Meteor.user(),
   };
 }, App);

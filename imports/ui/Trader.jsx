@@ -31,9 +31,10 @@ export default class Trader extends Component {
       return
     }
     Meteor.call('books.tradeBooks', this.props.book, choice)
-    /// first just remove books from database
+    /// 
     // 2. should change book to exchanged = true, list exchange in both users 'Successful Trades list', 
-    // book not show on all books list, email users
+    // book not show on all books list, email users OR swap owner of book. create separate collections for 
+    // successful trades (books swapped, with whom with user email address) mark trade completes
   }
 
   handleChange(event) {
