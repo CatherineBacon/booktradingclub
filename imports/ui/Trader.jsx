@@ -29,7 +29,8 @@ export default class Trader extends Component {
     if(choice=='Decline Trade') {
       Meteor.call('books.declineTrade', this.props.book)
     }
-    /// submit should 1. if declined on traded book - tradeProposed=false and proposedByUsername, proposedById reset to ''
+    Meteor.call('books.tradeBooks', this.props.book, choice)
+    /// first just remove books from database
     // 2. should change book to exchanged = true, list exchange in both users 'Successful Trades list', 
     // book not show on all books list, email users
   }

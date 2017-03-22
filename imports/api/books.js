@@ -36,7 +36,18 @@ Meteor.methods({
 	'books.declineTrade'(book) {
 		Books.update(book._id, { $set: {
 			tradeProposed: false,
+			proposedById: '',
+			proposedByUsername: '',
 		} });
+	},
+
+	'books.tradeBooks'(firstBook, secondBookId) {
+		if (firstBook.owner != Meteor.userId()) {
+			throw new Meteor.Error('not-authorized');
+		}
+
+		Books.remove(firstBook._id);
+		Books.remove(secondBookId);
 	},
 
 	'books.remove'(book) {
