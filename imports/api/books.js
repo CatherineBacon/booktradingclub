@@ -33,6 +33,12 @@ Meteor.methods({
 		});
 	},
 
+	'books.declineTrade'(book) {
+		Books.update(book._id, { $set: {
+			tradeProposed: false,
+		} });
+	},
+
 	'books.remove'(book) {
 		check(book._id, String);
 		check(book.owner, String);

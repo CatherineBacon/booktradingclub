@@ -25,6 +25,10 @@ export default class Trader extends Component {
 
   handleSubmit() {
     event.preventDefault();
+    let choice = this.state.value;
+    if(choice=='Decline Trade') {
+      Meteor.call('books.declineTrade', this.props.book)
+    }
     /// submit should 1. if declined on traded book - tradeProposed=false and proposedByUsername, proposedById reset to ''
     // 2. should change book to exchanged = true, list exchange in both users 'Successful Trades list', 
     // book not show on all books list, email users
@@ -39,20 +43,20 @@ export default class Trader extends Component {
   render() {
     if(!this.props.book.tradeProposed) {
       return (
-        <span></span>
+        <span></span> 
       );
     }
     return (
         <form onSubmit={this.handleSubmit.bind(this)}>
           <label> 
             Trade proposed by {this.props.book.proposedByUsername}
-          </label>
+          </label> 
           <select value={this.state.value} onChange={this.handleChange.bind(this)}>
             <option key='decline' value='Decline Trade'>Decline Trade</option>
             {this.renderTraderBooks()}
           </select>
           <input type="submit" value="Go!" />
-        </form>
+        </form> 
     );
   }
 }
