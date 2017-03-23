@@ -29,6 +29,7 @@ class App extends Component {
               <h1>Welcome to Book Exchange!</h1>
               <Link to='/mybooks'>My Books</Link>
               <Link to='/allbooks'>All Books</Link>
+              <Link to='/profile'>Profile</Link>
             </div>
           )} />
 

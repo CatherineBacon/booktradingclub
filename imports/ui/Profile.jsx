@@ -35,7 +35,7 @@ class Profile extends Component {
 		const city = this.state.city;
 		const country = this.state.country;
 
-		console.log(fullName, city, country)
+		Meteor.call('Meteor.users.additionalinfo.update', fullName, city, country);
 	}
 	
 	render() {
