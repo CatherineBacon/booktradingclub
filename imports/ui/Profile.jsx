@@ -37,14 +37,16 @@ class Profile extends Component {
   render() {
     if (!this.props.currentUser) return <div>Please login</div>;
 
-    const { fullName } = this.props.currentUser;
+    const { fullName, city, country } = this.props.currentUser;
 
     return (
       <div>
         <h2>Profile</h2>
         <p><b>username</b>: {Meteor.user().username}</p>
         <p><b>email address</b>: {Meteor.user().emails[0].address}</p>
-        <p>{fullName}</p>
+        {fullName && <p><b>full name</b>: {fullName}</p>}
+        {city && <p><b>town/city</b>: {city}</p>}
+        {country && <p><b>country</b>: {country}</p>}
 
         <h4>Update Profile</h4>
         <form onSubmit={this.handleSubmit.bind(this)}>
