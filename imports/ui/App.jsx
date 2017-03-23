@@ -10,6 +10,7 @@ import Book from './Book.jsx';
 import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 import MyBooks from './MyBooks.jsx';
 import AllBooks from './AllBooks.jsx';
+import Profile from './Profile.jsx';
 
 class App extends Component {
 
@@ -30,6 +31,8 @@ class App extends Component {
               <Link to='/allbooks'>All Books</Link>
             </div>
           )} />
+
+          <Route path='/profile' component={Profile} />
 
           <Route path="/mybooks" component={MyBooks} />
 
