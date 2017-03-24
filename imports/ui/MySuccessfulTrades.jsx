@@ -12,12 +12,12 @@ class MySuccessfulTrades extends Component {
 }
 
 MySuccessfulTrades.propTypes = {
-  succesfulTrades: PropTypes.array.isRequired
+  successfulTrades: PropTypes.array.isRequired
 };
 
 export default createContainer(
   () => {
-    Meteor.subscribe('succesfulTrades');
+    Meteor.subscribe('successfulTrades');
 
     return {
       successfulTrades: SuccessfulTrades.find(

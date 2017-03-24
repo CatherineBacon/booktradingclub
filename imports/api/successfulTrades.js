@@ -12,13 +12,21 @@ if (Meteor.isServer) {
 }
 
 Meteor.methods({
-  'succesfulTrades.insert'(firstBook, secondBook, owner, trader) {
-    SuccesfulTrades.insert({
-      swapped: [(title: 'title')],
-      gained: [
-        (title: 'new book'),
-        (preiousOwner: 'trader'),
-        (previousUsername: 'trader')
+  'successfulTrades.insert'(firstBook, secondBook) {
+    SuccessfulTrades.insert({
+      books: [
+        {
+          title: firstBook.title,
+          id: firstBook._id,
+          previousOwner: firstBook.owner,
+          previousUsername: firstBook.username
+        },
+        {
+          title: secondBook.title,
+          id: secondBook._id,
+          previousOwner: secondBook.owner,
+          previousUsername: secondBook.username
+        }
       ],
       createdAt: new Date()
     });
