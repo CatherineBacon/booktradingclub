@@ -13,6 +13,9 @@ if (Meteor.isServer) {
 
 Meteor.methods({
   'successfulTrades.insert'(firstBook, secondBook) {
+    check(firstBook, Object);
+    check(secondBook, Object);
+
     SuccessfulTrades.insert({
       books: [
         {

@@ -74,6 +74,7 @@ Meteor.methods({
         proposedByUsername: ''
       }
     });
+    Meteor.call('successfulTrades.insert', firstBook, secondBook);
   },
 
   'books.remove'(book) {

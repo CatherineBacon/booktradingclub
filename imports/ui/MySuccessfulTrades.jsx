@@ -7,7 +7,13 @@ import { SuccessfulTrades } from '../api/successfulTrades.js';
 
 class MySuccessfulTrades extends Component {
   render() {
-    return <div>{this.props.successfulTrades}</div>;
+    return (
+      <div>
+        {this.props.successfulTrades.map(trade => (
+          <p>{trade.books[0].title}</p>
+        ))}
+      </div>
+    );
   }
 }
 
