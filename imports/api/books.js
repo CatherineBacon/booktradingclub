@@ -43,20 +43,18 @@ Meteor.methods({
     });
   },
 
-  'books.tradeBooks'(firstBook, secondBookId) {
+  'books.tradeBooks'(firstBook, secondBook) {
     check(firstBook, Object);
-    check(secondBookId, String);
+    check(secondBook, Object);
 
     if (firstBook.owner != Meteor.userId()) {
       throw new Meteor.Error('not-authorized');
     }
 
-    let secondBook = Books.find({ _id: secondBookId }).fetch();
-
     let ownerOne = firstBook.owner;
     let usernameOne = firstBook.username;
-    let ownerTwo = secondBook[0].owner;
-    let usernameTwo = secondBook[0].username;
+    let ownerTwo = secondBook.owner;
+    let usernameTwo = secondBook.username;
 
     Books.update(firstBook._id, {
       $set: {
@@ -67,7 +65,7 @@ Meteor.methods({
         proposedByUsername: ''
       }
     });
-    Books.update(secondBookId, {
+    Books.update(secondBook._id, {
       $set: {
         owner: ownerOne,
         username: usernameOne,
