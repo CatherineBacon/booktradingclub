@@ -76,8 +76,6 @@ Meteor.methods({
         proposedByUsername: ''
       }
     });
-    //Books.remove(firstBook._id);
-    //Books.remove(secondBookId);
   },
 
   'books.remove'(book) {

@@ -11,6 +11,7 @@ import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 import MyBooks from './MyBooks.jsx';
 import AllBooks from './AllBooks.jsx';
 import Profile from './Profile.jsx';
+import MySuccessfulTrades from './MySuccessfulTrades.jsx';
 
 class App extends Component {
   render() {
@@ -26,6 +27,7 @@ class App extends Component {
           <div>
             <Link to="/">Home</Link>
             <Link to="/mybooks">My Books</Link>
+            <Link to="/mysuccessfultrades">My successful trades</Link>
             <Link to="/allbooks">All Books</Link>
             <Link to="/profile">Profile</Link>
           </div>
@@ -46,6 +48,8 @@ class App extends Component {
               </div>
             )}
           />
+
+          <Route path="/mysuccessfultrades" component={MySuccessfulTrades} />
 
           <Route path="/profile" component={Profile} />
 
