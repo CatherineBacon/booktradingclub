@@ -22,13 +22,13 @@ class App extends Component {
           </header>
 
           <AccountsUIWrapper />
-          {Meteor.userId() &&
-            <div>
-              <Link to="/">Home</Link>
-              <Link to="/mybooks">My Books</Link>
-              <Link to="/allbooks">All Books</Link>
-              <Link to="/profile">Profile</Link>
-            </div>}
+
+          <div>
+            <Link to="/">Home</Link>
+            <Link to="/mybooks">My Books</Link>
+            <Link to="/allbooks">All Books</Link>
+            <Link to="/profile">Profile</Link>
+          </div>
 
           <Route
             exact
