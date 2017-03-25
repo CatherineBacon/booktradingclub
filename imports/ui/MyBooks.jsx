@@ -31,9 +31,9 @@ class MyBooks extends Component {
     );
     return filteredBooks.map(book => {
       return (
-        <li key={book._id}>
+        <div key={book._id}>
           <Book book={book} />
-        </li>
+        </div>
       );
     });
   }
@@ -48,10 +48,10 @@ class MyBooks extends Component {
       let traderBooks = books.filter(b => book.proposedById == b.owner);
 
       return (
-        <li key={book._id}>
+        <div key={book._id}>
           <Book book={book} page="MyBooks" />
           <Trader book={book} traderBooks={traderBooks} />
-        </li>
+        </div>
       );
     });
   }
@@ -66,9 +66,9 @@ class MyBooks extends Component {
 
     return filteredBooks.map(book => {
       return (
-        <li key={book._id}>
+        <div key={book._id}>
           <Book book={book} page="MyBooks" />
-        </li>
+        </div>
       );
     });
   }
@@ -94,7 +94,7 @@ class MyBooks extends Component {
             {' '}
             waiting)
           </h4>
-          <ul>{this.renderTradeRequests()}</ul>
+          <div>{this.renderTradeRequests()}</div>
 
           <h4>My books</h4>
           <label className="onlyShowProposed">
@@ -106,9 +106,9 @@ class MyBooks extends Component {
             />
             Only show books where a trade has been proposed
           </label>
-          <ul>
+          <div>
             {this.renderBooks()}
-          </ul>
+          </div>
         </div>
       );
     } else {

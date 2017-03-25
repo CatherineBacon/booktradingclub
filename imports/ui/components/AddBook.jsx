@@ -22,6 +22,8 @@ export default class AddBook extends Component {
 
     const { selectedBook } = this.state;
 
+    if (!selectedBook) return;
+
     Meteor.call('books.insert', selectedBook, err => {
       if (err) {
         return console.log(err.reason);

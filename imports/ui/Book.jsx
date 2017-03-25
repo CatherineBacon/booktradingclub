@@ -1,7 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import { Meteor } from 'meteor/meteor';
 
+import { Thumbnail, Button, Glyphicon } from 'react-bootstrap';
+
 import { Books } from '../api/books.js';
+
+const defaultImage = '/image/book.png';
 
 // Book component - represents a single book
 export default class Book extends Component {
@@ -27,36 +31,46 @@ export default class Book extends Component {
   render() {
     const bookClassName = this.props.book.tradeProposed ? 'tradeProposed' : '';
     const { book } = this.props;
+    const canDelete = book.owner == Meteor.userId();
 
     return (
-      <span className={bookClassName}>
+      <Thumbnail
+        src={book.image || defaultImage}
+        alt="cover picture"
+        className={bookClassName}
+      >
         {this.props.page != 'MyBooks'
-          ? <input
-              type="checkbox"
-              readOnly
-              checked={book.tradeProposed}
-              onClick={this.toggleTradeProposed.bind(this)}
-              hidden={this.hideTradeCheckbox()}
-            />
+          ? <p hidden={this.hideTradeCheckbox()}>
+              <input
+                type="checkbox"
+                readOnly
+                checked={book.tradeProposed}
+                onClick={this.toggleTradeProposed.bind(this)}
+              />
+              &nbsp; Trade
+            </p>
           : null}
-        <span className="text">
-          {book.title}
+        <h3 className="text">
+
+          <strong>{book.title}</strong>
           {' '}
           by
           {' '}
           {book.author || <em>unknown</em>}
-          {book.image && <img src={book.image} />}
-        </span>
+        </h3>
 
-        <button
-          className="delete"
-          onClick={this.deleteThisBook.bind(this)}
-          hidden={book.owner != Meteor.userId()}
-        >
-          ×
-        </button>
-
-      </span>
+        {canDelete &&
+          <p>
+            <Button
+              bsStyle="danger"
+              bsSize="xsmall"
+              className="delete"
+              onClick={this.deleteThisBook.bind(this)}
+            >
+              <Glyphicon glyph="remove" />
+            </Button>
+          </p>}
+      </Thumbnail>
     );
   }
 }
