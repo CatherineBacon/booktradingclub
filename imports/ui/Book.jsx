@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Meteor } from 'meteor/meteor';
 
-import { Thumbnail, Button, Glyphicon } from 'react-bootstrap';
+import { Thumbnail, Button, Glyphicon, Checkbox } from 'react-bootstrap';
 
 import { Books } from '../api/books.js';
 
@@ -39,28 +39,16 @@ export default class Book extends Component {
         alt="cover picture"
         className={bookClassName}
       >
-        {this.props.page != 'MyBooks'
-          ? <p hidden={this.hideTradeCheckbox()}>
-              <input
-                type="checkbox"
-                readOnly
-                checked={book.tradeProposed}
-                onClick={this.toggleTradeProposed.bind(this)}
-              />
-              &nbsp; Trade
-            </p>
-          : null}
-        <h3 className="text">
+
+        <h3 className={bookClassName}>
 
           <strong>{book.title}</strong>
           {' '}
           by
           {' '}
           {book.author || <em>unknown</em>}
-        </h3>
-
-        {canDelete &&
-          <p>
+          {' '}
+          {canDelete &&
             <Button
               bsStyle="danger"
               bsSize="xsmall"
@@ -68,8 +56,21 @@ export default class Book extends Component {
               onClick={this.deleteThisBook.bind(this)}
             >
               <Glyphicon glyph="remove" />
-            </Button>
-          </p>}
+            </Button>}
+        </h3>
+
+        {this.props.page != 'MyBooks'
+          ? <h3 hidden={this.hideTradeCheckbox()}>
+              <Checkbox
+                readOnly
+                checked={book.tradeProposed}
+                onClick={this.toggleTradeProposed.bind(this)}
+                inline
+              >
+                Trade
+              </Checkbox>
+            </h3>
+          : null}
       </Thumbnail>
     );
   }
