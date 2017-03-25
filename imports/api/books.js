@@ -17,7 +17,8 @@ Meteor.methods({
       book,
       Match.ObjectIncluding({
         title: String,
-        authors: Match.Optional([String])
+        authors: Match.Optional([String]),
+        thumbnail: Match.Optional(String)
       })
     );
 
@@ -27,10 +28,12 @@ Meteor.methods({
     }
 
     const author = book.authors ? book.authors.join(', ') : null;
+    const thumbnail = book.thumbnail || null;
 
     Books.insert({
       title: book.title,
       author,
+      image: thumbnail,
       createdAt: new Date(),
       owner: Meteor.userId(),
       username: Meteor.user().username,

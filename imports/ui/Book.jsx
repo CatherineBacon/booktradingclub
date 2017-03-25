@@ -26,6 +26,7 @@ export default class Book extends Component {
 
   render() {
     const bookClassName = this.props.book.tradeProposed ? 'tradeProposed' : '';
+    const { book } = this.props;
 
     return (
       <span className={bookClassName}>
@@ -33,23 +34,24 @@ export default class Book extends Component {
           ? <input
               type="checkbox"
               readOnly
-              checked={this.props.book.tradeProposed}
+              checked={book.tradeProposed}
               onClick={this.toggleTradeProposed.bind(this)}
               hidden={this.hideTradeCheckbox()}
             />
           : null}
         <span className="text">
-          {this.props.book.title}
+          {book.title}
           {' '}
           by
           {' '}
-          {this.props.book.author || <em>unknown</em>}
+          {book.author || <em>unknown</em>}
+          {book.image && <img src={book.image} />}
         </span>
 
         <button
           className="delete"
           onClick={this.deleteThisBook.bind(this)}
-          hidden={this.props.book.owner != Meteor.userId()}
+          hidden={book.owner != Meteor.userId()}
         >
           ×
         </button>
