@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 
-import { Grid, Row, Col, Clearfix } from 'react-bootstrap';
+import { Grid, Row, Col, Clearfix, PageHeader } from 'react-bootstrap';
 
 import { Books } from '../api/books.js';
 
@@ -63,7 +63,7 @@ class AllBooks extends Component {
     if (this.props.currentUser) {
       return (
         <Grid>
-          <h2>All Books</h2>
+          <PageHeader>All Books</PageHeader>
 
           <p>Books available to trade: {this.props.availableToTradeCount}</p>
 

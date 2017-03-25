@@ -40,7 +40,7 @@ export default class Book extends Component {
         className={bookClassName}
       >
 
-        <h3 className={bookClassName}>
+        <h4 className={bookClassName}>
 
           <strong>{book.title}</strong>
           {' '}
@@ -57,10 +57,10 @@ export default class Book extends Component {
             >
               <Glyphicon glyph="remove" />
             </Button>}
-        </h3>
+        </h4>
 
         {this.props.page != 'MyBooks'
-          ? <h3 hidden={this.hideTradeCheckbox()}>
+          ? <h4 hidden={this.hideTradeCheckbox()}>
               <Checkbox
                 readOnly
                 checked={book.tradeProposed}
@@ -69,7 +69,7 @@ export default class Book extends Component {
               >
                 Trade
               </Checkbox>
-            </h3>
+            </h4>
           : null}
       </Thumbnail>
     );
