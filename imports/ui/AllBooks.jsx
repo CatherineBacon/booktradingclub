@@ -62,7 +62,7 @@ class AllBooks extends Component {
   render() {
     if (this.props.currentUser) {
       return (
-        <Grid>
+        <Row>
           <PageHeader>All Books</PageHeader>
 
           <p>Books available to trade: {this.props.availableToTradeCount}</p>
@@ -92,7 +92,7 @@ class AllBooks extends Component {
           <Row>
             {this.renderBooks()}
           </Row>
-        </Grid>
+        </Row>
       );
     } else {
       return <div>Please login</div>;
