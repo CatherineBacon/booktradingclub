@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
+import { Grid, Row, Col, Clearfix } from 'react-bootstrap';
 
 import { Books } from '../api/books.js';
 
@@ -29,13 +30,21 @@ class MyBooks extends Component {
     let filteredBooks = books.filter(
       book => book.proposedById == Meteor.userId()
     );
-    return filteredBooks.map(book => {
-      return (
-        <div key={book._id}>
-          <Book book={book} />
-        </div>
+    let bookComponents = [];
+
+    filteredBooks.forEach((book, i) => {
+      bookComponents.push(
+        <Col sm={4} key={book._id} className="clearfix">
+          <Book book={book} page="AllBooks" />
+        </Col>
       );
+
+      if ((i + 1) % 3 == 0) {
+        bookComponents.push(<Clearfix key={i} />);
+      }
     });
+
+    return bookComponents;
   }
 
   renderTradeRequests() {
@@ -64,52 +73,70 @@ class MyBooks extends Component {
       filteredBooks = filteredBooks.filter(book => book.tradeProposed);
     }
 
-    return filteredBooks.map(book => {
-      return (
-        <div key={book._id}>
-          <Book book={book} page="MyBooks" />
-        </div>
+    let bookComponents = [];
+
+    filteredBooks.forEach((book, i) => {
+      bookComponents.push(
+        <Col sm={4} key={book._id} className="clearfix">
+          <Book book={book} page="AllBooks" />
+        </Col>
       );
+
+      if ((i + 1) % 3 == 0) {
+        bookComponents.push(<Clearfix key={i} />);
+      }
     });
+
+    return bookComponents;
   }
 
   render() {
     Meteor.subscribe('books');
     if (this.props.currentUser) {
       return (
-        <div>
+        <Grid>
           <h2>My Books</h2>
 
           <h4>Add book</h4>
           <AddBook />
-
-          <h4>
-            Your trade requests ({this.props.youProposedTradeCount} outstanding)
-          </h4>
-          <ul>{this.renderYourRequests()}</ul>
-
-          <h4>
-            Trade requests for your books (
-            {this.props.tradeProposedCount}
-            {' '}
-            waiting)
-          </h4>
-          <div>{this.renderTradeRequests()}</div>
-
-          <h4>My books</h4>
-          <label className="onlyShowProposed">
-            <input
-              type="checkbox"
-              readOnly
-              checked={this.state.onlyShowProposed}
-              onClick={this.toggleOnlyShowProposed.bind(this)}
-            />
-            Only show books where a trade has been proposed
-          </label>
-          <div>
+          <Row>
+            <h4>
+              Your trade requests (
+              {this.props.youProposedTradeCount}
+              {' '}
+              outstanding)
+            </h4>
+            <ul>{this.renderYourRequests()}</ul>
+          </Row>
+          <Row>
+            <h4>
+              Trade requests for your books (
+              {this.props.tradeProposedCount}
+              {' '}
+              waiting)
+            </h4>
+          </Row>
+          <Row>
+            <div>{this.renderTradeRequests()}</div>
+          </Row>
+          <Row>
+            <h4>My books</h4>
+          </Row>
+          <Row>
+            <label className="onlyShowProposed">
+              <input
+                type="checkbox"
+                readOnly
+                checked={this.state.onlyShowProposed}
+                onClick={this.toggleOnlyShowProposed.bind(this)}
+              />
+              Only show books where a trade has been proposed
+            </label>
+          </Row>
+          <Row>
             {this.renderBooks()}
-          </div>
-        </div>
+          </Row>
+        </Grid>
       );
     } else {
       return <div>Please login</div>;

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { Nav, NavItem } from 'react-bootstrap';
 
 import { Books } from '../api/books.js';
 
@@ -24,13 +25,16 @@ class App extends Component {
 
           <AccountsUIWrapper />
 
-          <div>
-            <Link to="/">Home</Link>
-            <Link to="/mybooks">My Books</Link>
-            <Link to="/mysuccessfultrades">My successful trades</Link>
-            <Link to="/allbooks">All Books</Link>
-            <Link to="/profile">Profile</Link>
-          </div>
+          <Nav bsStyle="pills">
+            <NavItem eventKey="1" href="/">Home</NavItem>
+            <NavItem eventKey="2" href="/mybooks">My Books</NavItem>
+          </Nav>
+
+          <Link to="/">Home</Link>
+          <Link to="/mybooks">My Books</Link>
+          <Link to="/mysuccessfultrades">My successful trades</Link>
+          <Link to="/allbooks">All Books</Link>
+          <Link to="/profile">Profile</Link>
 
           <Route
             exact
