@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
-import { check } from 'meteor/check';
+import { check, Match } from 'meteor/check';
 
 export const Books = new Mongo.Collection('books');
 
@@ -12,17 +12,24 @@ if (Meteor.isServer) {
 }
 
 Meteor.methods({
-  'books.insert'(title, author) {
-    check(title, String);
-    check(author, String);
+  'books.insert'(book) {
+    check(
+      book,
+      Match.ObjectIncluding({
+        title: String,
+        authors: Match.Optional([String])
+      })
+    );
 
     // make sure user is logged in before inserting book
     if (!Meteor.userId()) {
       throw new Meteor.Error('not-authorized');
     }
 
+    const author = book.authors ? book.authors.join(', ') : null;
+
     Books.insert({
-      title,
+      title: book.title,
       author,
       createdAt: new Date(),
       owner: Meteor.userId(),
