@@ -3,6 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { SimpleSelect } from 'react-selectize';
 import { _ } from 'lodash';
 import googleBooks from 'google-books-search';
+import { Form, FormGroup, FormControl } from 'react-bootstrap';
 
 import '/node_modules/react-selectize/themes/index.css';
 
@@ -17,10 +18,12 @@ export default class AddBook extends Component {
     this.handleSearch = _.debounce(this._search, 500);
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
+  handleChange(selection) {
+    const selectedBook = _.get(selection, 'value', null);
 
-    const { selectedBook } = this.state;
+    this.setState({
+      selectedBook
+    });
 
     if (!selectedBook) return;
 
@@ -31,12 +34,6 @@ export default class AddBook extends Component {
       this.setState({
         selectedBook: null
       });
-    });
-  }
-
-  handleChange(selection) {
-    this.setState({
-      selectedBook: _.get(selection, 'value', null)
     });
   }
 
@@ -71,17 +68,14 @@ export default class AddBook extends Component {
     const mappedOptions = options.map(this.bookToOption);
 
     return (
-      <form className="new-book" onSubmit={this.handleSubmit.bind(this)}>
-        <SimpleSelect
-          placeholder="Search for Title or Author"
-          options={mappedOptions}
-          onSearchChange={this.handleSearch.bind(this)}
-          onValueChange={this.handleChange.bind(this)}
-          theme="bootstrap3"
-          value={this.bookToOption(selectedBook)}
-        />
-        <input type="submit" value="Add" />
-      </form>
+      <SimpleSelect
+        placeholder="Search for Title or Author"
+        options={mappedOptions}
+        onSearchChange={this.handleSearch.bind(this)}
+        onValueChange={this.handleChange.bind(this)}
+        theme="bootstrap3"
+        value={this.bookToOption(selectedBook)}
+      />
     );
   }
 }

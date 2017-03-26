@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
-import { Grid, Row, Col, Clearfix } from 'react-bootstrap';
+import { Row, Col, Clearfix, PageHeader, Badge } from 'react-bootstrap';
 
 import { Books } from '../api/books.js';
 
@@ -94,31 +94,34 @@ class MyBooks extends Component {
     Meteor.subscribe('books');
     if (this.props.currentUser) {
       return (
-        <Grid>
-          <h2>My Books</h2>
+        <Row>
+          <Col>
+            <PageHeader>My Books</PageHeader>
+          </Col>
 
-          <h4>Add book</h4>
-          <AddBook />
-          <Row>
-            <h4>
-              Your trade requests (
-              {this.props.youProposedTradeCount}
+          <Col>
+            <h3>Add book</h3>
+            <AddBook />
+          </Col>
+
+          <Col>
+            <h3>
+              Your trade requests
               {' '}
-              outstanding)
-            </h4>
-            <ul>{this.renderYourRequests()}</ul>
-          </Row>
-          <Row>
-            <h4>
-              Trade requests for your books (
-              {this.props.tradeProposedCount}
+              <Badge>{this.props.youProposedTradeCount}</Badge>
+            </h3>
+            <Row>{this.renderYourRequests()}</Row>
+          </Col>
+
+          <Col>
+            <h3>
+              Trade requests for your books
               {' '}
-              waiting)
-            </h4>
-          </Row>
-          <Row>
-            <div>{this.renderTradeRequests()}</div>
-          </Row>
+              <Badge>{this.props.tradeProposedCount}</Badge>
+            </h3>
+            <Row>{this.renderTradeRequests()}</Row>
+          </Col>
+
           <Row>
             <h4>My books</h4>
           </Row>
@@ -133,10 +136,10 @@ class MyBooks extends Component {
               Only show books where a trade has been proposed
             </label>
           </Row>
-          <Row>
+          <Col>
             {this.renderBooks()}
-          </Row>
-        </Grid>
+          </Col>
+        </Row>
       );
     } else {
       return <div>Please login</div>;

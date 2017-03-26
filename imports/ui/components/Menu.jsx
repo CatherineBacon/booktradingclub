@@ -41,8 +41,9 @@ export default class Menu extends Component {
               <NavItem eventKey={4} href="#">Profile</NavItem>
             </Nav>
           </Navbar>
-
-          <h5 className="pull-right"><AccountsUIWrapper /></h5>
+        </Col>
+        <Col xsOffset={9}>
+          <h5><AccountsUIWrapper /></h5>
         </Col>
       </Row>
     );
