@@ -50,7 +50,7 @@ class Profile extends Component {
   }
 
   render() {
-    if (!this.props.currentUser) return <div>Please login</div>;
+    if (!this.props.currentUser) return <PageHeader>Please login</PageHeader>;
 
     const { fullName, city, country } = this.props.currentUser;
 

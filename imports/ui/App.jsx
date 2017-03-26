@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import { Grid } from 'react-bootstrap';
+import { Grid, Row, Col, Panel } from 'react-bootstrap';
 
 import { Books } from '../api/books.js';
 
@@ -31,6 +31,18 @@ class App extends Component {
           <Route path="/mybooks" component={MyBooks} />
 
           <Route path="/allbooks" component={AllBooks} />
+
+          <Row>
+            <Col>
+              <Panel>
+                Written and coded by
+                {' '}
+                <a href="https://github.com/CatherineBacon/booktradingclub">
+                  Catherine Bacon
+                </a>
+              </Panel>
+            </Col>
+          </Row>
 
         </Grid>
       </Router>

@@ -10,19 +10,34 @@ import {
   ListGroup,
   ListGroupItem
 } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 import { SuccessfulTrades } from '../api/successfulTrades.js';
 
 class MySuccessfulTrades extends Component {
   render() {
+    if (!Meteor.userId()) return <PageHeader>Please login</PageHeader>;
+
+    const trades = this.props.successfulTrades;
+
     return (
       <Row>
         <Col>
           <PageHeader>My Successful Trades</PageHeader>
         </Col>
         <Col>
+          {trades.length == 0 &&
+            <p>
+              You have no trades! Why not
+              {' '}
+              <Link to="/mybooks">add a book</Link>
+              {' '}
+              and then
+              {' '}
+              <Link to="/allbooks">propose a trade</Link>
+            </p>}
           <ListGroup>
-            {this.props.successfulTrades.map(trade => (
+            {trades.map(trade => (
               <ListGroupItem key={trade._id}>
                 <strong>{trade.ownerBookTitle}</strong>
                 {' '}

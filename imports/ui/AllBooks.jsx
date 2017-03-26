@@ -117,7 +117,7 @@ class AllBooks extends Component {
         </Row>
       );
     } else {
-      return <div>Please login</div>;
+      return <PageHeader>Please login</PageHeader>;
     }
   }
 }
