@@ -23,7 +23,7 @@ class AllBooks extends Component {
 
     this.state = {
       hideTradeProposed: false,
-      hideMyBooks: false
+      hideMyBooks: true
     };
   }
 

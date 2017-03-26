@@ -22,7 +22,6 @@ class App extends Component {
         <Grid>
 
           <Route render={({ history }) => <Menu history={history} />} />
-
           <Route exact path="/" render={() => <Home />} />
 
           <Route path="/mysuccessfultrades" component={MySuccessfulTrades} />

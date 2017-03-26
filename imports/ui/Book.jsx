@@ -1,7 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import { Meteor } from 'meteor/meteor';
 
-import { Thumbnail, Button, Glyphicon, Checkbox } from 'react-bootstrap';
+import {
+  Thumbnail,
+  Button,
+  Glyphicon,
+  Checkbox,
+  Popover,
+  OverlayTrigger
+} from 'react-bootstrap';
 
 import { Books } from '../api/books.js';
 
@@ -32,6 +39,11 @@ export default class Book extends Component {
     const bookClassName = this.props.book.tradeProposed ? 'tradeProposed' : '';
     const { book } = this.props;
     const canDelete = book.owner == Meteor.userId();
+    const overlay = (
+      <Popover title={book.title} id={book.title}>
+        {book.description || <em>no description</em>}
+      </Popover>
+    );
 
     return (
       <Thumbnail
@@ -42,11 +54,15 @@ export default class Book extends Component {
 
         <h4 className={bookClassName}>
 
-          <strong>{book.title}</strong>
-          {' '}
-          by
-          {' '}
-          {book.author || <em>unknown</em>}
+          <OverlayTrigger trigger={['hover', 'focus']} overlay={overlay}>
+            <span>
+              <strong>{book.title}</strong>
+              {' '}
+              by
+              {' '}
+              {book.author || <em>unknown</em>}
+            </span>
+          </OverlayTrigger>
           {' '}
           {canDelete &&
             <Button

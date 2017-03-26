@@ -73,7 +73,7 @@ export default class AddBook extends Component {
     return (
       <form className="new-book" onSubmit={this.handleSubmit.bind(this)}>
         <SimpleSelect
-          placeholder="Title"
+          placeholder="Search for Title or Author"
           options={mappedOptions}
           onSearchChange={this.handleSearch.bind(this)}
           onValueChange={this.handleChange.bind(this)}

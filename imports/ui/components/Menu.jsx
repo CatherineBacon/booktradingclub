@@ -13,7 +13,7 @@ export default class Menu extends Component {
     const routes = [
       '/',
       '/mybooks',
-      '/mysuccesfultrades',
+      '/mysuccessfultrades',
       '/allbooks',
       'profile'
     ];

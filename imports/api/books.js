@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { check, Match } from 'meteor/check';
+import { _ } from 'lodash';
 
 export const Books = new Mongo.Collection('books');
 
@@ -18,7 +19,8 @@ Meteor.methods({
       Match.ObjectIncluding({
         title: String,
         authors: Match.Optional([String]),
-        thumbnail: Match.Optional(String)
+        thumbnail: Match.Optional(String),
+        description: Match.Optional(String)
       })
     );
 
@@ -29,11 +31,13 @@ Meteor.methods({
 
     const author = book.authors ? book.authors.join(', ') : null;
     const thumbnail = book.thumbnail || null;
+    const description = _.truncate(book.description, { length: 500 }) || null;
 
     Books.insert({
       title: book.title,
       author,
       image: thumbnail,
+      description,
       createdAt: new Date(),
       owner: Meteor.userId(),
       username: Meteor.user().username,
