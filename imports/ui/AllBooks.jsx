@@ -3,7 +3,15 @@ import ReactDOM from 'react-dom';
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 
-import { Grid, Row, Col, Clearfix, PageHeader } from 'react-bootstrap';
+import {
+  Grid,
+  Row,
+  Col,
+  Clearfix,
+  PageHeader,
+  Checkbox,
+  Badge
+} from 'react-bootstrap';
 
 import { Books } from '../api/books.js';
 
@@ -63,35 +71,49 @@ class AllBooks extends Component {
     if (this.props.currentUser) {
       return (
         <Row>
-          <PageHeader>All Books</PageHeader>
+          <Col>
+            <PageHeader>All Books</PageHeader>
+          </Col>
 
-          <p>Books available to trade: {this.props.availableToTradeCount}</p>
-
-          <label className="hide-tradeProposed">
-            <input
+          <Col xs={12}>
+            <span className="pull-right">
+              Books available to trade:
+              {' '}
+              <Badge>{this.props.availableToTradeCount}</Badge>
+            </span>
+          </Col>
+          <Col>
+            <Checkbox
+              className="hide-tradeProposed"
               type="checkbox"
               readOnly
               checked={this.state.hideTradeProposed}
               onClick={this.toggleHideTradeProposed.bind(this)}
-            />
-            Hide books where trade has been proposed
-          </label>
+            >
+              Hide books where trade has been proposed
+            </Checkbox>
+          </Col>
 
-          <label className="hide-myBooks">
-            <input
-              type="checkbox"
+          <Col>
+            <Checkbox
+              className="hide-myBooks"
               readOnly
               checked={this.state.hideMyBooks}
               onClick={this.toggleHideMyBooks.bind(this)}
-            />
-            Hide my own books
-          </label>
+            >
+              Hide my own books
+            </Checkbox>
+          </Col>
 
-          <h4>Check the box to propose a trade</h4>
+          <Col>
+            <h3>Check the box to propose a trade</h3>
+          </Col>
 
-          <Row>
-            {this.renderBooks()}
-          </Row>
+          <Col>
+            <Row>
+              {this.renderBooks()}
+            </Row>
+          </Col>
         </Row>
       );
     } else {

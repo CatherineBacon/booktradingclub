@@ -67,7 +67,7 @@ export default class Book extends Component {
                 onClick={this.toggleTradeProposed.bind(this)}
                 inline
               >
-                Trade
+                Request trade
               </Checkbox>
             </h4>
           : null}
