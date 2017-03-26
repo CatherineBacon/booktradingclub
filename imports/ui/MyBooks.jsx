@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
-import { Row, Col, Clearfix, PageHeader, Badge } from 'react-bootstrap';
+import { Row, Col, Clearfix, PageHeader, Badge, Media } from 'react-bootstrap';
 
 import { Books } from '../api/books.js';
 
@@ -57,10 +57,16 @@ class MyBooks extends Component {
       let traderBooks = books.filter(b => book.proposedById == b.owner);
 
       return (
-        <div key={book._id}>
-          <Book book={book} page="MyBooks" />
-          <Trader book={book} traderBooks={traderBooks} />
-        </div>
+        <Media key={book._id}>
+          <Media.Left>
+            <img width={64} height={63} src={book.image} alt="Image" />
+          </Media.Left>
+          <Media.Body>
+            <Media.Heading>{book.title}</Media.Heading>
+            <p>Trade proposed by {book.proposedByUsername}</p>
+            <Trader book={book} traderBooks={traderBooks} />
+          </Media.Body>
+        </Media>
       );
     });
   }
@@ -119,7 +125,7 @@ class MyBooks extends Component {
               {' '}
               <Badge>{this.props.tradeProposedCount}</Badge>
             </h3>
-            <Row>{this.renderTradeRequests()}</Row>
+            <div>{this.renderTradeRequests()}</div>
           </Col>
 
           <Row>

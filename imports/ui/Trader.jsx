@@ -1,5 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import { Meteor } from 'meteor/meteor';
+import {
+  FormGroup,
+  FormControl,
+  ControlLabel,
+  Button,
+  Form
+} from 'react-bootstrap';
 
 import { Books } from '../api/books.js';
 
@@ -45,19 +52,23 @@ export default class Trader extends Component {
       return <span />;
     }
     return (
-      <form onSubmit={this.handleSubmit.bind(this)}>
-        <label>
-          Trade proposed by {this.props.book.proposedByUsername}
-        </label>
-        <select
-          value={this.state.value}
-          onChange={this.handleChange.bind(this)}
-        >
-          <option key="decline" value="Decline Trade">Decline Trade</option>
-          {this.renderTraderBooks()}
-        </select>
-        <input type="submit" value="Go!" />
-      </form>
+      <Form inline onSubmit={this.handleSubmit.bind(this)}>
+        <FormGroup>
+          <ControlLabel>Select a book to exchange: </ControlLabel>
+          {' '}
+          <FormControl
+            componentClass="select"
+            placeholder="select"
+            value={this.state.value}
+            onChange={this.handleChange.bind(this)}
+          >
+            <option key="decline" value="Decline Trade">Decline Trade</option>
+            {this.renderTraderBooks()}
+          </FormControl>
+        </FormGroup>
+        <Button type="submit">Go!</Button>
+
+      </Form>
     );
   }
 }
