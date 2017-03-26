@@ -2,7 +2,15 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
-import { Row, Col, Clearfix, PageHeader, Badge, Media } from 'react-bootstrap';
+import {
+  Row,
+  Col,
+  Clearfix,
+  PageHeader,
+  Badge,
+  Media,
+  Checkbox
+} from 'react-bootstrap';
 
 import { Books } from '../api/books.js';
 
@@ -128,27 +136,28 @@ class MyBooks extends Component {
             <div>{this.renderTradeRequests()}</div>
           </Col>
 
-          <Row>
-            <h4>My books</h4>
-          </Row>
-          <Row>
-            <label className="onlyShowProposed">
-              <input
-                type="checkbox"
-                readOnly
-                checked={this.state.onlyShowProposed}
-                onClick={this.toggleOnlyShowProposed.bind(this)}
-              />
-              Only show books where a trade has been proposed
-            </label>
-          </Row>
           <Col>
-            {this.renderBooks()}
+            <h3>My books {' '} <Badge>{this.props.yourBooksCount}</Badge></h3>
+          </Col>
+          <Col>
+            <Checkbox
+              className="onlyShowProposed"
+              readOnly
+              checked={this.state.onlyShowProposed}
+              onClick={this.toggleOnlyShowProposed.bind(this)}
+            >
+              Only show books where a trade has been proposed
+            </Checkbox>
+          </Col>
+          <Col>
+            <Row>
+              {this.renderBooks()}
+            </Row>
           </Col>
         </Row>
       );
     } else {
-      return <div>Please login</div>;
+      return <PageHeader>Please login</PageHeader>;
     }
   }
 }
@@ -170,6 +179,9 @@ export default createContainer(
           sort: { createdAt: -1 }
         }
       ).fetch(),
+      yourBooksCount: Books.find({
+        owner: Meteor.userId()
+      }).count(),
       tradeProposedCount: Books.find({
         tradeProposed: { $ne: false },
         owner: Meteor.userId()
