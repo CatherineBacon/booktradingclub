@@ -35,7 +35,7 @@ export default class Menu extends Component {
               <NavItem eventKey={0} href="#">Home</NavItem>
               <NavItem eventKey={1} href="#">My Books</NavItem>
               <NavItem eventKey={2} href="#">
-                My Succesful Trades
+                My Successful Trades
               </NavItem>
               <NavItem eventKey={3} href="#">All Books</NavItem>
               <NavItem eventKey={4} href="#">Profile</NavItem>
