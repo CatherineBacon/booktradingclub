@@ -22,6 +22,6 @@ I used [Meteor](https://www.meteor.com/) as the platform. Combined with [React](
 
 List of book options and book cover image obtained from the [node google-books-search api](https://github.com/smilledge/node-google-books-search).
 
-It is styled with [react-bootstrap](https://react-bootstrap.github.io/) and the Flatly theme on [boostswatch](https://bootswatch.com/).
+It is styled with [react-bootstrap](https://react-bootstrap.github.io/) and the Flatly theme from [boostswatch](https://bootswatch.com/).
 
 I also used [react-selectize](https://github.com/furqanZafar/react-selectize) for the dropdown.

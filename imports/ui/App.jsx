@@ -14,6 +14,7 @@ import Profile from './Profile.jsx';
 import MySuccessfulTrades from './MySuccessfulTrades.jsx';
 import Menu from './components/Menu.jsx';
 import Home from './pages/Home.jsx';
+import About from './pages/About.jsx';
 
 class App extends Component {
   render() {
@@ -32,6 +33,8 @@ class App extends Component {
 
           <Route path="/allbooks" component={AllBooks} />
 
+          <Route path="/about" component={About} />
+
           <Row>
             <Col>
               <Panel>
@@ -40,6 +43,7 @@ class App extends Component {
                 <a href="https://github.com/CatherineBacon/booktradingclub">
                   Catherine Bacon
                 </a>
+                <Link to="/about" className="pull-right">About</Link>
               </Panel>
             </Col>
           </Row>
